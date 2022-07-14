@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+IMAGE=$(vw/remote-images | jq -r '.[]' | rofi -dmenu -no-custom -i -p "Install Visualworks Image" -lines 35)
+[ -n "$IMAGE" ] || exit 1
+
+VERSION=$(vw/remote-image-versions $IMAGE | jq -r '.versions[]' | rofi -dmenu -no-custom -i -p "Install $IMAGE Version" -lines 10)
+[ -n "$VERSION" ] || exit 1
+
+lxterminal -e "vw/install-image-version $IMAGE $VERSION"

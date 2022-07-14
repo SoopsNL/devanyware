@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+IMAGE_AND_VERSION=$(vw/installed-images-and-versions | jq -r '.[] | .name as $name | .versions[] | "\($name) \(.)"' | rofi -dmenu -no-custom -i -p "Run Visualworks Image" -lines 20)
+[ -n "$IMAGE_AND_VERSION" ] || exit 1
+
+IMAGE=${IMAGE_AND_VERSION% *}
+VERSION=${IMAGE_AND_VERSION#* }
+
+vw/run-image-version $IMAGE $VERSION &!

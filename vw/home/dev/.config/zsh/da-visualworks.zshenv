@@ -181,7 +181,6 @@ vw/install-image-version () {
     mv ${DIR}.tmp/*/* ${DIR}
     rm -rf ${DIR}.tmp
     find $DIR -name 'index.html*' -exec rm {} \;
-    tar -zxf ~/visualworks/initial-configuration.tar.gz --strip-components=1 --directory=$DIR
 }
 
 vw/install-cached-image-version () {
@@ -229,8 +228,6 @@ vw/run-image-version () {
     shift ; shift
     VISUALWORKS=/home/dev/visualworks/vw${IMAGE%/*}
     DIR=/home/dev/visualworks/images/$IMAGE.image/$VERSION.version
-    sudo chmod -R ugo+rw /home/dev/visualworks/configuration
-    ln -sf /home/dev/visualworks/configuration/*.ini $DIR
     cd $DIR && VISUALWORKS=$VISUALWORKS $VISUALWORKS/bin/linux86/visual -m7 1m *.im $*
 }
 

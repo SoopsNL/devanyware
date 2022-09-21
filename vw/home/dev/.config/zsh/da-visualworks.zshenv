@@ -58,6 +58,17 @@ da/install-postgres-client () {
     touch ~/.config/zsh/postgres-client.zshenv
 }
 
+da/install-postgres-client64 () {
+    set -euxo pipefail
+
+    [[ -a ~/.config/zsh/postgres-client64.zshenv ]] && return
+
+    sudo apt-get update
+    DEBIAN_FRONTEND='noninteractive' sudo apt-get install -y libpq5
+
+    touch ~/.config/zsh/postgres-client64.zshenv
+}
+
 da/install-gemstone-client () {
     set -euxo pipefail
 

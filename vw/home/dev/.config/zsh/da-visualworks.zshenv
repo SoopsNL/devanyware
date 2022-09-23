@@ -7,17 +7,38 @@ da/install-oracle-client () {
     sudo apt-get update
 
     sudo zsh -c " \
-        mkdir -p /oracle/client ; \
-        curl --silent http://files.soops.intern/Software/Oracle/instantclient-basic-linux-18.3.0.0.0dbru.tar.gz | tar zx --strip-components=1 --directory=/oracle/client ; \
-        echo '/oracle/client' > /etc/ld.so.conf.d/oracle.conf && sudo ldconfig ; \
-        echo 'general=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=general)))' > /oracle/client/network/admin/tnsnames.ora \
+        mkdir -p /opt/oracle/i86 ; \
+        curl --silent http://files.soops.intern/Software/Oracle/instantclient-basic-linux-18.3.0.0.0dbru.tar.gz | tar zx --strip-components=1 --directory=/opt/oracle/i86 ; \
+        echo '/opt/oracle/i86' > /etc/ld.so.conf.d/oracle.conf && sudo ldconfig ; \
+        echo 'general=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=general)))' > /opt/oracle/i86/network/admin/tnsnames.ora \
     "
 
     (
-        echo 'export ORACLE_HOME=/oracle/client'
-        echo 'export TNS_ADMIN=/oracle'
+        echo 'export ORACLE_HOME=/opt/oracle/i86'
+        echo 'export TNS_ADMIN=/opt/oracle'
         echo 'export NLS_LANG=AMERICAN_AMERICA.UTF8'
     ) > ~/.config/zsh/oracle-client.zshenv
+}
+
+da/install-oracle-client64 () {
+    set -euxo pipefail
+
+    [[ -a ~/.config/zsh/oracle-client64.zshenv ]] && return
+
+    sudo apt-get update
+
+    sudo zsh -c " \
+        mkdir -p /opt/oracle/x64 ; \
+        curl --silent http://files.soops.intern/Software/Oracle/instantclient-basic-linux.x64-18.3.0.0.0dbru.tar.gz | tar zx --strip-components=1 --directory=/opt/oracle/x64 ; \
+        echo '/opt/oracle/x64' > /etc/ld.so.conf.d/oracle.conf && sudo ldconfig ; \
+        echo 'general=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=general)))' > /opt/oracle/x64/network/admin/tnsnames.ora \
+    "
+
+    (
+        echo 'export ORACLE_HOME=/opt/oracle/x64'
+        echo 'export TNS_ADMIN=/opt/oracle'
+        echo 'export NLS_LANG=AMERICAN_AMERICA.UTF8'
+    ) > ~/.config/zsh/oracle-client64.zshenv
 }
 
 da/install-sqlite3 () {

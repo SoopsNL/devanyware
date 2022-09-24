@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-exec tigervncserver :0 -localhost no --I-KNOW-THIS-IS-INSECURE -fg -cleanstale \
-    -geometry 1920x1200 -depth 24 -dpi 72 \
-    -rfbport 5900 -SecurityTypes None \
-    -AllowOverride RemapKeys \
-    -xstartup $HOME/.config/vnc/xstartup

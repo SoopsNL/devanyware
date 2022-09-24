@@ -1,4 +1,3 @@
-
 #!/usr/bin/env zsh
 
 exec tigervncserver :0 -localhost no --I-KNOW-THIS-IS-INSECURE -fg -cleanstale \

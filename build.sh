@@ -6,7 +6,7 @@ set -euxo pipefail
 
 ./clean.sh
 
-for name in vw ; do 
+for name in vw vw-headless; do 
     pushd $name
     echo "$name build of $(date)" > ../$name.build.log
     docker build \

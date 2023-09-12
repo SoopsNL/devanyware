@@ -207,7 +207,7 @@ vw/install-image-version () {
     DIR=~/visualworks/images/$IMAGE.image/$VERSION.version
     rm -rf ${DIR}.tmp
     mkdir -p ${DIR}.tmp
-    wget -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 4 -P ${DIR}.tmp http://files.soops.intern/Builds/$IMAGE/$VERSION/
+    wget -nv -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 4 -P ${DIR}.tmp http://files.soops.intern/Builds/$IMAGE/$VERSION/
     rm -rf ${DIR}
     mkdir -p ${DIR}
     mv ${DIR}.tmp/*/* ${DIR}

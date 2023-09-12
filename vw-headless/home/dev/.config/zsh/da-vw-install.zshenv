@@ -107,7 +107,7 @@ vw/install-image-version () {
     DIR=~/visualworks/images/$IMAGE.image/$VERSION.version
     rm -rf ${DIR}.tmp
     mkdir -p ${DIR}.tmp
-    wget -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 4 -P ${DIR}.tmp http://files.soops.intern/Builds/$IMAGE/$VERSION/
+    wget -nv -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 4 -P ${DIR}.tmp http://files.soops.intern/Builds/$IMAGE/$VERSION/
     rm -rf ${DIR}
     mkdir -p ${DIR}
     mv ${DIR}.tmp/*/* ${DIR}
@@ -122,7 +122,7 @@ vw/install-runtime-image-version () {
     VERSION=$2
     VWVERSION=$3
     DIR=~/work
-    wget -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 5 -P ${DIR} http://files.soops.intern/Builds/$VWVERSION/$IMAGE/$VERSION/$IMAGE/runtime.im
+    wget -nv -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 5 -P ${DIR} http://files.soops.intern/Builds/$VWVERSION/$IMAGE/$VERSION/$IMAGE/runtime.im
 }
 
 vw/install-cached-image-version () {

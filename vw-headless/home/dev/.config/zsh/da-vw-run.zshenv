@@ -20,7 +20,7 @@ vw/run-image-version64 () {
     cd $DIR && VISUALWORKS=$VISUALWORKS $VISUALWORKS/bin/linuxx86_64/visual -m7 1m *.im $*
 }
 
-vw/run-image-version-headless () {
+vw/run-image-version32-headless () {
     set -euxo pipefail
 
     VERSION=$1
@@ -37,5 +37,5 @@ vw/run-image-version64-headless () {
     shift
     VISUALWORKS=/home/dev/visualworks/vw${VERSION}
     DIR=/home/dev/work
-    cd $DIR && exec $VISUALWORKS/bin/linuxx86_64/visual -m7 1m runtime.im $*
+    cd $DIR && exec $VISUALWORKS/bin/linuxx86_64/visual -m7 1m runtime64.im $*
 }

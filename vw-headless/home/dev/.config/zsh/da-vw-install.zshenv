@@ -31,12 +31,14 @@ da/install-vw32 () {
     # Can't use uuid-runtime because the 32 & 64 bit versions conflict
     sudo DEBIAN_FRONTEND='noninteractive' apt-get install -y --no-install-recommends -o apt-get::Immediate-Configure=false \
        uuid-dev uuid-dev:i386 \
+       libx11-6:i386 \
        libncurses5 libncurses5:i386 \
        libaio1 libaio1:i386 \
        libaudit1:i386 \
        libcap-ng0:i386 \
        libpam0g:i386 \
        libxss1 \
+       zlib1g:i386 \
        libssl-dev:i386
     touch ~/.config/zsh/visualworks32.zshenv
 }
@@ -48,7 +50,14 @@ da/install-vw-runtime () {
 
     [[ -a ~/.config/zsh/vw-runtime-$VWVERSION.zshenv ]] && return
     da/install-vw
-    curl --silent http://files.soops.intern/Software/Cincom/vw$VWVERSION.tar.gz | tar -z --wildcards --directory=/home/dev/visualworks -x 'vw'${VWVERSION}'/bin/linuxx86_64/visual' 'vw'${VWVERSION}'/bin/linuxx86_64/vwlinuxx86_64*' 'vw'${VWVERSION}'/bin/linuxx86_64/tlsPlugin.so'
+    da/install-vw32
+    curl --silent http://files.soops.intern/Software/Cincom/vw$VWVERSION.tar.gz | tar -z --wildcards --directory=/home/dev/visualworks -x \
+        'vw'${VWVERSION}'/bin/linuxx86_64/visual' \
+        'vw'${VWVERSION}'/bin/linuxx86_64/vwlinuxx86_64*' \
+        'vw'${VWVERSION}'/bin/linuxx86_64/tlsPlugin.so' \
+        'vw'${VWVERSION}'/bin/linux86/visual' \
+        'vw'${VWVERSION}'/bin/linux86/vwlinux86*' \
+        'vw'${VWVERSION}'/bin/linux86/tlsPlugin.so'
     touch ~/.config/zsh/vw-runtime-$VWVERSION.zshenv
 }
 
@@ -115,7 +124,7 @@ vw/install-image-version () {
     find $DIR -name 'index.html*' -exec rm {} \;
 }
 
-vw/install-runtime-image-version () {
+vw/install-runtime-image-version32 () {
     set -euxo pipefail
 
     IMAGE=$1
@@ -123,6 +132,16 @@ vw/install-runtime-image-version () {
     VWVERSION=$3
     DIR=~/work
     wget -nv -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 5 -P ${DIR} http://files.soops.intern/Builds/$VWVERSION/$IMAGE/$VERSION/$IMAGE/runtime.im
+}
+
+vw/install-runtime-image-version64 () {
+    set -euxo pipefail
+
+    IMAGE=$1
+    VERSION=$2
+    VWVERSION=$3
+    DIR=~/work
+    wget -nv -m -np -nH --reject-regex '.*/\?.*' --cut-dirs 5 -P ${DIR} http://files.soops.intern/Builds/$VWVERSION/$IMAGE/$VERSION/$IMAGE/runtime64.im
 }
 
 vw/install-cached-image-version () {

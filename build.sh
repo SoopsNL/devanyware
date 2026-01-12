@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-
+#!/usr/bin/env -S zsh
 export VERSION_TAG=$1
 
 set -euxo pipefail
